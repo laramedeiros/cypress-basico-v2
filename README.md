@@ -1,4 +1,4 @@
-# Testes automatizados com Cypress - Básico
+# Testes automatizados com Cypress - Básico 💫
 Este documento é referente ao Curso básico de Cypress, e nele contém todas as informações que foram necessárias durante a minha jornada neste universo de conhecimento de automatização, vem comigo!
 
 ## 📝Pre-requisitos
