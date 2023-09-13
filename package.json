@@ -4,7 +4,8 @@
   "description": "Repositório da versão 2 do curso básico de Cypress da Escola Talking About Testing",
   "main": "src/index.html",
   "scripts": {
-    "test": "npx cypress open"
+    "test": "npx cypress open",
+    "teste": "npx cypress run"
   },
   "repository": {
     "type": "git",
