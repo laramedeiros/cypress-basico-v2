@@ -13,4 +13,4 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          teste: npm cypress run
+          teste: Texto Aleatorio
