@@ -4,7 +4,7 @@ Conheça a estrutura do curso básico de Cypress da Escola TAT no Udemy.
 
 ## Contexto e exemplos
 
-No início de cada aula, determino o contexto do que será tratado.
+No início de cada aula, determino o contexto do que será tratado..
 
 > 👨‍🏫 Por exemplo: Fazendo _upload_ de arquivos com Cypress.
 
