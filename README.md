@@ -24,4 +24,4 @@ npx cypress run
 ```
 
 
-Este projeto foi feito com muito carinho por Lara Medeiros❤️💫
+Este projeto foi feito com muito carinho por Lara Medeiros❤️
