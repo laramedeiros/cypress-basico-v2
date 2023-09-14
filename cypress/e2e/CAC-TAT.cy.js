@@ -1,4 +1,5 @@
 describe('Central de Atendimento ao Cliente TAT', function() {
+  const Three_seconds_in_ms=3000
 
   beforeEach(() => {
     cy.visit ('./src/index.html')
@@ -8,17 +9,27 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
   })
 
-  it('Preenche os campos obrigatórios e envia o formulário', () => {
-    cy.get('#firstName').type('Roque')
-    cy.get('#lastName').type('Uorak')
-    cy.get('#email').type('roque3953@uorak.com')
-    cy.get('#open-text-area').type('Gostaria de uma ajuda para conseguir resolver meu impedimento', {delay:0})
-    cy.contains('button', 'Enviar').click()
-
-    cy.get('.success').should('be.visible')
+  Cypress._.times(3, () => {
+    it('Preenche os campos obrigatórios e envia o formulário', () => {
+      cy.clock()
+  
+      cy.get('#firstName').type('Roque')
+      cy.get('#lastName').type('Uorak')
+      cy.get('#email').type('roque3953@uorak.com')
+      cy.get('#open-text-area').type('Gostaria de uma ajuda para conseguir resolver meu impedimento', {delay:0})
+      cy.contains('button', 'Enviar').click()
+  
+      cy.get('.success').should('be.visible')
+  
+      cy.tick(Three_seconds_in_ms)
+  
+      cy.get('.success').should('not.be.visible')
+    })
   })
 
   it('Exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
+    cy.clock()
+
     cy.get('#firstName').type('Maria')
     cy.get('#lastName').type('teste')
     cy.get('#email').type('mariateste@,com')
@@ -26,6 +37,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     cy.contains('button', 'Enviar').click()
 
     cy.get('.error').should('be.visible')
+
+    cy.tick(Three_seconds_in_ms)
+
+    cy.get('.error').should('not.be.visible')
 
   })
 
@@ -36,6 +51,8 @@ describe('Central de Atendimento ao Cliente TAT', function() {
   })
 
   it('Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+    cy.clock()
+
     cy.get('#firstName').type('Maria')
     cy.get('#lastName').type('teste')
     cy.get('#email').type('mariateste@.com')
@@ -44,6 +61,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     cy.contains('button', 'Enviar').click()
 
     cy.get('.error').should('be.visible')
+
+    cy.tick(Three_seconds_in_ms)
+
+    cy.get('.error').should('not.be.visible')
   })
 
   it('Preenche e limpa os campos nome, sobrenome, email e telefone', () => {
@@ -69,9 +90,15 @@ describe('Central de Atendimento ao Cliente TAT', function() {
   })
 
   it('Exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios.', () => {
+    cy.clock()
+
     cy.contains('button', 'Enviar').click()
 
     cy.get('.error').should('be.visible')
+
+    cy.tick(Three_seconds_in_ms)
+
+    cy.get('.error').should('not.be.visible')
   })
 
   it('Selecione o produto (YouTube) por seu texto', () => {
@@ -120,9 +147,15 @@ describe('Central de Atendimento ao Cliente TAT', function() {
   })
 
   it('Envia o formuário com sucesso usando um comando customizado', () => {
+    cy.clock()
+
     cy.contains('button', 'Enviar').click()
 
     cy.get('.error').should('be.visible')
+
+    cy.tick(Three_seconds_in_ms)
+
+    cy.get('.error').should('not.be.visible')
     
   })
 
@@ -179,4 +212,29 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     
   })
   
+  it('Exibe e esconde as mensagens de sucesso e erro usando o .invoke()', () => {
+    cy.get('.success')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Mensagem enviada com sucesso.')
+      .invoke('hide')
+      .should('not.be.visible')
+    cy.get('.error')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Valide os campos obrigatórios!')
+      .invoke('hide')
+      .should('not.be.visible')
+  })
+
+  it.only('Preenche a area de texto usando o comando invoke', () => {
+
+    const longtext = Cypress._.repeat('Gostaria de tirar uma dúvida', 20)
+    
+    cy.get('#open-text-area')
+      .invoke('val', longtext)
+      .should('have.value', longtext)
+  })
 })
