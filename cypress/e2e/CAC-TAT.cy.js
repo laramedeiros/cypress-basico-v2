@@ -220,6 +220,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       .and('contain', 'Mensagem enviada com sucesso.')
       .invoke('hide')
       .should('not.be.visible')
+
     cy.get('.error')
       .should('not.be.visible')
       .invoke('show')
@@ -237,4 +238,25 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       .invoke('val', longtext)
       .should('have.value', longtext)
   })
+
+  it('Faz uma requisição HTTP', () => {
+    cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+      .should((response) => {
+        console.log(response)
+        const {status, statusText, body} = response;
+
+        expect(status).to.equal(200);
+        expect(statusText).to.equal('OK')
+        expect(body).to.include('CAC TAT')
+
+      })
+  })
+
+  it('Desafio encontre o Gato', () => {
+    cy.get('#cat')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+  })
+
 })
